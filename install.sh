@@ -37,6 +37,6 @@ echo
 echo "Make sure you have the OpenAI API key set via one of these options:" 
 echo "  - environment variable"
 echo "  - .env or an ~/.openai.apikey file or in"
-echo "  - yolo.yaml"
+echo "  - tgpt.yaml"
 echo
 echo "Have fun!"
