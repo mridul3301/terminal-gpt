@@ -1,15 +1,18 @@
+#!/usr/bin/env python3
+
 import os
 import subprocess
 import openai
 import dotenv
 import yaml
 import platform
-import dotenv
+from dotenv import load_dotenv
 import sys
 import distro
 from termcolor import colored
 from colorama import init
 import pyperclip
+
 
 
 
@@ -78,26 +81,15 @@ def set_api_key():
   #1. Place a ".env" file in same directory as this with the line:
   #   OPENAI_API_KEY="<yourkey>"
   #   or do `export OPENAI_API_KEY=<yourkey>` before use
-  dotenv.load_dotenv()
-  openai.api_key = os.getenv("OPENAI_API_KEY")
+  load_dotenv()
+  openai.api_key = "<YOUR_API_KEY>"
   
-  #2. Place a ".openai.apikey" in the home directory that holds the line:
-  #   <yourkey>
-  #   Note: This options will likely be removed in the future
-  if not openai.api_key:  #If statement to avoid "invalid filepath" error
-    home_path = os.path.expanduser("~")    
-    openai.api_key_path = os.path.join(home_path,".openai.apikey")
-
-  #3. Final option is the key might be in the tgpt.yaml config file
-  #   openai_apikey: <yourkey>
-  if not openai.api_key:  
-    openai.api_key = config["openai_api_key"]
-
 if __name__ == "__main__":
 
   config = read_config()
   set_api_key()
 
+  print(openai.api_key)
   # Unix based SHELL (/bin/bash, /bin/zsh), otherwise assuming it's Windows
   shell = os.environ.get("SHELL", "/bin/bash") 
 
@@ -138,7 +130,7 @@ def call_open_ai(query):
   #print(prompt)
 
   # Call the ChatGPT API
-  response = openai.ChatCompletion.create(
+  response = openai.Completion.create(
     model=config["model"],
     messages=[
         {"role": "system", "content": system_prompt},
